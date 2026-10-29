@@ -24,6 +24,11 @@ namespace AI
             _currentState.OnEnter();
         }
 
+        public bool IsInState<T>() where T : IState
+        {
+            return _currentState is T;
+        }
+
         public void Update()
         {
             _currentState?.Tick();
