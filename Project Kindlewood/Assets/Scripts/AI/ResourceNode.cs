@@ -12,8 +12,10 @@ namespace AI
         [Header("Visual settings")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Sprite depletedSprite;
+        [SerializeField] private Animator animator;
 
         private bool _isDepleted;
+        private static readonly int HitTrigger = Animator.StringToHash("Hit");
 
         private void Awake()
         {
@@ -22,6 +24,11 @@ namespace AI
             if (!spriteRenderer)
             {
                 spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            }
+
+            if (animator == null)
+            {
+                animator = GetComponent<Animator>();
             }
         }
 
@@ -35,6 +42,14 @@ namespace AI
             if (_isDepleted) return;
 
             _currentResources -= amount;
+
+            // Poistettu huutomerkki (!), jotta tämä suoritetaan kun Animator on olemassa
+            if (animator)
+            {
+                Debug.Log($"[ResourceNode] Laukaistaan Hit-animaatio Animatorille.");
+                animator.SetTrigger(HitTrigger);
+            }
+            
             // If node runs out of resource, run the depletion func
             if (_currentResources <= 0)
             {
@@ -47,7 +62,7 @@ namespace AI
             _isDepleted = true;
             
             // Swap to empty resource node sprite
-            if (depletedSprite != null && spriteRenderer != null)
+            if (depletedSprite && spriteRenderer)
             {
                 spriteRenderer.sprite = depletedSprite;
             }

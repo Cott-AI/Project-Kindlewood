@@ -15180,9 +15180,9 @@ TextureImporter:
         - {x: 4, y: 4}
         - {x: 3, y: 6}
         - {x: -8, y: 6}
-      - - {x: 3, y: -8}
+      - - {x: 2, y: -8}
         - {x: 7, y: -8}
-        - {x: 6, y: 3}
+        - {x: 4, y: 4}
         - {x: 2, y: 4}
       tessellationDetail: 0
       bones: []

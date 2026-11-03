@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2950620321588172420}
   - component: {fileID: 4560851955342511392}
   - component: {fileID: 3123780715488516225}
+  - component: {fileID: -1150362996705158574}
+  - component: {fileID: 2488765836578346214}
   m_Layer: 0
   m_Name: Maple_tree
   m_TagString: Untagged
@@ -130,3 +132,41 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.0625, y: 1.5}
   m_Direction: 0
+--- !u!114 &-1150362996705158574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250672690484363768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca562bb31fcccf47a5cd98f2ff687a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AI.ResourceNode
+  maxResources: 20
+  spriteRenderer: {fileID: 0}
+  depletedSprite: {fileID: 828105502029230361, guid: ac7a0e53651211b46bbae85a115a8ff6, type: 3}
+  animator: {fileID: 0}
+--- !u!95 &2488765836578346214
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7250672690484363768}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a0a23b28d2e4c404f8bad9086f1a8ed5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
