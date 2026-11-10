@@ -38,6 +38,7 @@ namespace AI
             // Set States
             _stateMachine.RegisterState(new VillagerIdleState(this));
             _stateMachine.RegisterState(new VillagerGatherState(this));
+            _stateMachine.RegisterState(new VillagerReturnState(this));
         }
 
         private void Start()

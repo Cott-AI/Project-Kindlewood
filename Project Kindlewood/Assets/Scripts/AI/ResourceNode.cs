@@ -4,7 +4,8 @@ namespace AI
 {
     public class ResourceNode : MonoBehaviour
     {
-        [Header("Resource settings")] 
+        [Header("Resource Settings")] 
+        [SerializeField] private string resourceType = "Wood"; // Resurssin tyyppi/nimi
         [SerializeField] private int maxResources = 20;
 
         private int _currentResources;
@@ -16,7 +17,10 @@ namespace AI
 
         private bool _isDepleted;
         private static readonly int HitTrigger = Animator.StringToHash("Hit");
-
+        public string GetResourceType()
+        {
+            return resourceType;
+        }
         private void Awake()
         {
             _currentResources =  maxResources;
