@@ -378,6 +378,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Black_12
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 0
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccefe23696bf0b04e8d9432b215f3ab5
+      internalID: 2086346529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -398,6 +420,7 @@ TextureImporter:
       Black_1: -832438446
       Black_10: -1911731659
       Black_11: 1434567755
+      Black_12: 2086346529
       Black_2: -184477735
       Black_3: -455472213
       Black_4: -1878077924

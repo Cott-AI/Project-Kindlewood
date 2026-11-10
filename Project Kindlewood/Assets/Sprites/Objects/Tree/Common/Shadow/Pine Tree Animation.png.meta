@@ -155,11 +155,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 92
-        width: 128
-        height: 53
+        y: 96
+        width: 32
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -176,12 +176,12 @@ TextureImporter:
       name: Pine Tree Animation_1
       rect:
         serializedVersion: 2
-        x: 3
-        y: 143
-        width: 25
-        height: 36
+        x: 0
+        y: 144
+        width: 28
+        height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -198,12 +198,12 @@ TextureImporter:
       name: Pine Tree Animation_2
       rect:
         serializedVersion: 2
-        x: 34
-        y: 143
-        width: 27
-        height: 39
+        x: 32
+        y: 144
+        width: 29
+        height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -221,11 +221,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 143
+        y: 144
         width: 31
-        height: 41
+        height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -242,12 +242,12 @@ TextureImporter:
       name: Pine Tree Animation_4
       rect:
         serializedVersion: 2
-        x: 95
-        y: 143
-        width: 33
-        height: 43
+        x: 96
+        y: 144
+        width: 32
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -264,12 +264,12 @@ TextureImporter:
       name: Pine Tree Animation_5
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 47
-        width: 30
-        height: 46
+        width: 32
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -286,12 +286,12 @@ TextureImporter:
       name: Pine Tree Animation_6
       rect:
         serializedVersion: 2
-        x: 31
+        x: 32
         y: 47
         width: 32
         height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -308,12 +308,12 @@ TextureImporter:
       name: Pine Tree Animation_7
       rect:
         serializedVersion: 2
-        x: 63
+        x: 64
         y: 47
-        width: 33
-        height: 48
+        width: 32
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -330,12 +330,12 @@ TextureImporter:
       name: Pine Tree Animation_8
       rect:
         serializedVersion: 2
-        x: 95
+        x: 96
         y: 47
-        width: 33
-        height: 46
+        width: 32
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -357,7 +357,7 @@ TextureImporter:
         width: 20
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -379,7 +379,7 @@ TextureImporter:
         width: 25
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -401,7 +401,7 @@ TextureImporter:
         width: 29
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -423,7 +423,7 @@ TextureImporter:
         width: 31
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -436,11 +436,77 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Pine Tree Animation_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 792c46195a061f64fa034aac1a998a3a
+      internalID: -1981319964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pine Tree Animation_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb2d848397e099043a9ffe85dd895016
+      internalID: -572077648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pine Tree Animation_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed2d57b0043b6b94bae8c1c19abfdb4f
+      internalID: 1785475208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 64b7e9a1ce541d44985a7fc893752d81
     internalID: 0
     vertices: []
     indices: 
@@ -455,6 +521,9 @@ TextureImporter:
       Pine Tree Animation_10: 1778063121208857476
       Pine Tree Animation_11: -2184660585252317309
       Pine Tree Animation_12: 4874031352413731613
+      Pine Tree Animation_13: -1981319964
+      Pine Tree Animation_14: -572077648
+      Pine Tree Animation_15: 1785475208
       Pine Tree Animation_2: 8838924933018337548
       Pine Tree Animation_3: -1762790350866421621
       Pine Tree Animation_4: 3963039096378449534

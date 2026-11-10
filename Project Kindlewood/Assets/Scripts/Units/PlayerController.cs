@@ -5,15 +5,15 @@ namespace Units
 
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
-    [RequireComponent(typeof(Animator))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField] private float moveSpeed = 6f;
 
         private Rigidbody2D _rb;
+        
+        // Changed to a single Animator, since only the Body has one now!
         private Animator _animator;
-        private SpriteRenderer _spriteRenderer;
         
         private Vector2 _movementInput;
         private Vector2 _lastMoveDirection = Vector2.down;
@@ -28,8 +28,8 @@ namespace Units
             _rb.gravityScale = 0f;
             _rb.freezeRotation = true;
             
-            _animator = GetComponent<Animator>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
+            // Grabs the single Animator from the Body child object
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void Update()
@@ -47,31 +47,26 @@ namespace Units
             if (_movementInput.sqrMagnitude > 0.01f)
             {
                 _lastMoveDirection = _movementInput;
-                
-                _animator.SetFloat(MoveX, _movementInput.x);
-                _animator.SetFloat(MoveY, _movementInput.y);
-                _animator.SetBool(IsMoving, true);
-
-                if (_movementInput.x > 0.01f)
-                {
-                    _spriteRenderer.flipX = false;
-                }
-                else if (_movementInput.x < -0.01f)
-                {
-                    _spriteRenderer.flipX = true;
-                }
+                UpdateAnimator(_movementInput.x, _movementInput.y, true);
             }
             else
             {
-                _animator.SetFloat(MoveX, _lastMoveDirection.x);
-                _animator.SetFloat(MoveY, _lastMoveDirection.y);
-                _animator.SetBool(IsMoving, false);
+                UpdateAnimator(_lastMoveDirection.x, _lastMoveDirection.y, false);
             }
         }
 
         private void FixedUpdate()
         {
             _rb.MovePosition(_rb.position + _movementInput * (moveSpeed * Time.fixedDeltaTime));
+        }
+        
+        private void UpdateAnimator(float x, float y, bool isMoving)
+        {
+            if (_animator == null) return;
+            
+            _animator.SetFloat(MoveX, x);
+            _animator.SetFloat(MoveY, y);
+            _animator.SetBool(IsMoving, isMoving);
         }
     }
 }
