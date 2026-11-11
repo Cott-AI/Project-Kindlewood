@@ -5,7 +5,7 @@ namespace AI
     public class ResourceNode : MonoBehaviour
     {
         [Header("Resource Settings")] 
-        [SerializeField] private string resourceType = "Wood"; // Resurssin tyyppi/nimi
+        [SerializeField] private string resourceType = "Wood";
         [SerializeField] private int maxResources = 20;
 
         private int _currentResources;
@@ -17,63 +17,66 @@ namespace AI
 
         private bool _isDepleted;
         private static readonly int HitTrigger = Animator.StringToHash("Hit");
-        public string GetResourceType()
-        {
-            return resourceType;
-        }
+
+        // Trim() to make sure new resource isn't made when depositing into Resource Box
+        public string GetResourceType() => resourceType.Trim();
+
+        public bool IsAvailable() => !_isDepleted;
+
         private void Awake()
         {
-            _currentResources =  maxResources;
+            _currentResources = maxResources;
 
             if (!spriteRenderer)
             {
                 spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             }
 
-            if (animator == null)
+            if (!animator)
             {
                 animator = GetComponent<Animator>();
             }
         }
 
-        public bool IsAvailable()
+        // Returns how many resources was actually collected
+        public int Gather(int amount = 1)
         {
-            return !_isDepleted;
-        }
+            if (_isDepleted || amount <= 0) return 0;
 
-        public void Gather(int amount = 1)
-        {
-            if (_isDepleted) return;
+            int gatheredAmount = Mathf.Min(amount, _currentResources);
+            _currentResources -= gatheredAmount;
 
-            _currentResources -= amount;
-
-            // Poistettu huutomerkki (!), jotta tämä suoritetaan kun Animator on olemassa
             if (animator)
             {
-                Debug.Log($"[ResourceNode] Laukaistaan Hit-animaatio Animatorille.");
                 animator.SetTrigger(HitTrigger);
             }
             
-            // If node runs out of resource, run the depletion func
             if (_currentResources <= 0)
             {
                 DepleteNode();
             }
+
+            return gatheredAmount;
         }
 
         private void DepleteNode()
         {
             _isDepleted = true;
+
+            // Disable animator, so it doesn't overwrite depletedSprite image
+            if (animator)
+            {
+                animator.enabled = false;
+            }
             
-            // Swap to empty resource node sprite
+            // Swap to empty resource node sprite (esim. kanto)
             if (depletedSprite && spriteRenderer)
             {
                 spriteRenderer.sprite = depletedSprite;
             }
             
-            // remove collider, so villager doesn't try to gather empty node
-            var col = GetComponent<Collider2D>();
-            if (col)
+            // Remove collider, so villager doesn't try to gather empty node
+            if (TryGetComponent<Collider2D>(out var col))
             {
                 col.enabled = false;
             }

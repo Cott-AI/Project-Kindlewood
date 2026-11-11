@@ -1,9 +1,8 @@
 using AI.States;
+using UnityEngine;
 
 namespace AI
 {
-    using UnityEngine;
-
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     public class VillagerController : MonoBehaviour
@@ -15,10 +14,13 @@ namespace AI
         
         [Header("Movement & Target References")]
         [SerializeField] private float moveSpeed = 4f;
-        [SerializeField] private float stoppingDistance = 0.8f;
+        [SerializeField] private float stoppingDistance = 1f;
+        
         [field: SerializeField] public Transform CurrentTarget { get; set; }
+        public float StoppingDistance => stoppingDistance;
         public int InventoryCount { get; set; }
         public int MaxInventory { get; set; } = 10;
+        public string CarriedResourceType { get; set; } = "Wood";
 
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
@@ -32,10 +34,8 @@ namespace AI
             
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            // Setup state machine
+            
             _stateMachine = new StateMachine();
-
-            // Set States
             _stateMachine.RegisterState(new VillagerIdleState(this));
             _stateMachine.RegisterState(new VillagerGatherState(this));
             _stateMachine.RegisterState(new VillagerReturnState(this));
@@ -43,7 +43,6 @@ namespace AI
 
         private void Start()
         {
-            // Set default to idle
             _stateMachine.ChangeState<VillagerIdleState>();
         }
 
@@ -57,23 +56,26 @@ namespace AI
             _stateMachine.ChangeState<T>();
         }
 
+        public bool IsInRange(Vector2 targetPosition)
+        {
+            return Vector2.Distance(transform.position, targetPosition) <= stoppingDistance;
+        }
+
+        public void StopMoving()
+        {
+            _animator.SetBool(IsMoving, false);
+            _rb.linearVelocity = Vector2.zero;
+        }
+
         public void MoveTowards(Vector2 targetPosition)
         {
-            Vector2 currentPos = transform.position;
-            float distanceToTarget = Vector2.Distance(currentPos, targetPosition);
-
-            if (distanceToTarget <= stoppingDistance)
+            if (IsInRange(targetPosition))
             {
-                _animator.SetBool(IsMoving, false);
-                _rb.linearVelocity = Vector2.zero;
-
-                if (!_stateMachine.IsInState<VillagerGatherState>())
-                {
-                    ChangeState<VillagerGatherState>();
-                }
+                StopMoving();
                 return;
             }
 
+            Vector2 currentPos = transform.position;
             Vector2 direction = (targetPosition - currentPos).normalized;
             
             _animator.SetFloat(MoveX, direction.x);
@@ -85,7 +87,7 @@ namespace AI
                 _spriteRenderer.flipX = direction.x < 0;
             }
             
-            _rb.MovePosition(_rb.position + direction * (moveSpeed * Time.fixedDeltaTime));
+            _rb.MovePosition(_rb.position + direction * (moveSpeed * Time.deltaTime));
         }
     }
 }

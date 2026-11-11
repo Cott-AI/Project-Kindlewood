@@ -5,6 +5,7 @@ namespace AI.States
     public class VillagerGatherState : IState
     {
         private readonly VillagerController _villager;
+        private ResourceNode _targetNode;
         private float _gatherTimer;
         private readonly float _gatherInterval = 1f;
 
@@ -16,52 +17,74 @@ namespace AI.States
         public void OnEnter()
         {
             _gatherTimer = 0f;
+            
+            if (_villager.CurrentTarget != null)
+            {
+                _targetNode = _villager.CurrentTarget.GetComponent<ResourceNode>();
+            }
+
             Debug.Log("[Villager AI] Entered Gather state.");
         }
 
         public void Tick()
         {
-            // 1. Jos reppu on täynnä, vaihdetaan suoraan paluutilaan
+            // If inventory is already full, go to Return State
             if (_villager.InventoryCount >= _villager.MaxInventory)
             {
+                _villager.StopMoving();
                 Debug.Log("[Villager AI] Reppu on täynnä. Siirrytään paluutilaan.");
                 _villager.ChangeState<VillagerReturnState>();
                 return;
             }
 
-            // 2. Jos kohde katosi tai puu loppui, takaisin Idle-tilaan
-            if (_villager.CurrentTarget == null)
+            // If resource disappears, stop moving towards it.
+            if (!_villager.CurrentTarget || !_targetNode || !_targetNode.IsAvailable())
             {
-                _villager.ChangeState<VillagerIdleState>();
+                _villager.StopMoving();
+                HandleNodeDepletedOrMissing();
                 return;
             }
 
-            // 3. Siirrytään puun luo
-            _villager.MoveTowards(_villager.CurrentTarget.position);
+            // If not close enough, keep moving towards resource
+            if (!_villager.IsInRange(_villager.CurrentTarget.position))
+            {
+                _villager.MoveTowards(_villager.CurrentTarget.position);
+                return;
+            }
 
-            // 4. Keräysajastin
+            // We reach resource, start collecting
+            _villager.StopMoving();
+
             _gatherTimer += Time.deltaTime;
             if (_gatherTimer >= _gatherInterval)
             {
                 _gatherTimer = 0f;
 
-                ResourceNode node = _villager.CurrentTarget.GetComponent<ResourceNode>();
-                if (node != null && node.IsAvailable())
-                {
-                    node.Gather();
-                    _villager.InventoryCount++;
-                    Debug.Log($"Kerätty 1. Repussa: {_villager.InventoryCount}/{_villager.MaxInventory}");
-                }
-                else
-                {
-                    _villager.CurrentTarget = null;
-                    _villager.ChangeState<VillagerIdleState>();
-                }
+                _targetNode.Gather();
+                _villager.CarriedResourceType = _targetNode.GetResourceType();
+                _villager.InventoryCount++;
+                
+                Debug.Log($"Collected 1 [{_villager.CarriedResourceType}]. Inventory: {_villager.InventoryCount}/{_villager.MaxInventory}");
+            }
+        }
+
+        private void HandleNodeDepletedOrMissing()
+        {
+            _villager.CurrentTarget = null;
+
+            if (_villager.InventoryCount > 0)
+            {
+                _villager.ChangeState<VillagerReturnState>();
+            }
+            else
+            {
+                _villager.ChangeState<VillagerIdleState>();
             }
         }
 
         public void OnExit()
         {
+            _targetNode = null;
         }
     }
 }

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using Economy;
 using Object = UnityEngine.Object;
@@ -20,34 +19,40 @@ namespace AI.States
             Debug.Log("[Villager AI] Entered Return state. Heading to ResourceBox.");
             _targetBox = Object.FindAnyObjectByType<ResourceBox>();
             
-            if (_targetBox != null)
+            if (!_targetBox)
             {
-                _villager.CurrentTarget = _targetBox.transform;
-            }
-            else
-            {
-                Debug.LogWarning("[VillagerReturnState] Kentältä ei löydy ResourceBox-laatikkoa!");
+                Debug.LogWarning("[VillagerReturnState] Cannot find Resource Box!");
             }
         }
 
         public void Tick()
         {
-            if (_targetBox == null) return;
+            if (!_targetBox) return;
 
-            // Kävellään kohti varastolaatikkoa
-            _villager.MoveTowards(_targetBox.transform.position);
-
-            // Tarkistetaan etäisyys laatikkoon
-            float distance = Vector2.Distance(_villager.transform.position, _targetBox.transform.position);
-            if (distance <= 1.2f)
+            // If not yet at the resource box, keep walking.
+            if (!_villager.IsInRange(_targetBox.transform.position))
             {
-                // Tyhjennetään reppu laatikkoon
-                _targetBox.DepositResources("MapleWood", _villager.InventoryCount);
-                _villager.InventoryCount = 0;
+                _villager.MoveTowards(_targetBox.transform.position);
+                return;
+            }
 
-                Debug.Log("[Villager AI] Resurssit palautettu. Palataan takaisin Idle-tilaan.");
+            // Reach the resource box and deposit carried resources.
+            _villager.StopMoving();
+            _targetBox.DepositResources(_villager.CarriedResourceType, _villager.InventoryCount);
+            _villager.InventoryCount = 0;
 
-                // Siirrytään takaisin Idle-tilaan etsimään uutta työtä
+            // If the resource node wasn't depleted, go back to gather from it.
+            // Or go to idle-state if it was depleted.
+            if (_villager.CurrentTarget != null && 
+                _villager.CurrentTarget.TryGetComponent<ResourceNode>(out var node) && 
+                node.IsAvailable())
+            {
+                Debug.Log("[Villager AI] Resources returned, go gather more.");
+                _villager.ChangeState<VillagerGatherState>();
+            }
+            else
+            {
+                Debug.Log("[Villager AI] Resources returned, go to Idle-state.");
                 _villager.CurrentTarget = null;
                 _villager.ChangeState<VillagerIdleState>();
             }
@@ -55,7 +60,7 @@ namespace AI.States
 
         public void OnExit()
         {
-            _villager.CurrentTarget = null;
+            _targetBox = null;
         }
     }
 }
