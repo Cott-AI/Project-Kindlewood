@@ -398,50 +398,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!1 &68394588
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 68394590}
-  - component: {fileID: 68394589}
-  m_Layer: 0
-  m_Name: Tester
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &68394589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68394588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284cd3102a87c6544bbaa052b80e3467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Units.AppearanceTester
---- !u!4 &68394590
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68394588}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.398, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &69398928
 GameObject:
   m_ObjectHideFlags: 0
@@ -29286,7 +29242,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -31813,7 +31769,7 @@ MonoBehaviour:
   resourceBoxUIPanel: {fileID: 1883768954}
   interactPrompt: {fileID: 180219673}
   playerTag: Player
-  openAutomatically: 0
+  openAutomatically: 1
   interactKey: 101
 --- !u!1 &1020806133
 GameObject:
@@ -33035,6 +32991,8 @@ GameObject:
   - component: {fileID: 1750614022}
   - component: {fileID: 1750614023}
   - component: {fileID: 1750614024}
+  - component: {fileID: 1750614025}
+  - component: {fileID: 1750614026}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -33246,6 +33204,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &1750614025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750614015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e94c50e0ffad974aa786d466ddb0a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Units.PlayerResourceCollector
+  gatherOffsetDistance: 0.6
+  gatherRadius: 0.6
+  gatherAmountPerHit: 1
+  gatherCooldown: 0.4
+  resourceLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  depositDirectlyToBox: 0
+  maxInventoryCapacity: 20
+  resourceBox: {fileID: 994412583}
+  gatherTriggerName: Gather
+--- !u!114 &1750614026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750614015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 888d90d57e66f874c883c2888671f606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Units.PlayerBuilder
+  campfirePrefab: {fileID: 0}
+  requiredResource: Wood
+  woodCost: 5
+  buildOffsetDistance: 1
+  placementCheckRadius: 0.4
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  buildingsParent: {fileID: 0}
+  resourceBox: {fileID: 0}
 --- !u!1 &1799679975
 GameObject:
   m_ObjectHideFlags: 0
@@ -34584,6 +34587,5 @@ SceneRoots:
   - {fileID: 1419131150}
   - {fileID: 1799679976}
   - {fileID: 1020806135}
-  - {fileID: 68394590}
   - {fileID: 2000934332}
   - {fileID: 273711459}

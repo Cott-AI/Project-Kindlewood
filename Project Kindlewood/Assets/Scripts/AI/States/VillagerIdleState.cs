@@ -52,7 +52,7 @@ namespace AI.States
 
         private ResourceNode FindNearestAvailableNode()
         {
-            ResourceNode[] allNodes = Object.FindObjectsByType<ResourceNode>(FindObjectsSortMode.None);
+            ResourceNode[] allNodes = Object.FindObjectsByType<ResourceNode>();
             ResourceNode closest = null;
             float minDistance = float.MaxValue;
 

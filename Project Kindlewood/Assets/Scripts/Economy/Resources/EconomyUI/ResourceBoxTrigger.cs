@@ -14,8 +14,7 @@ namespace Economy.Resources.EconomyUI
 
         [Header("Settings")]
         [SerializeField] private string playerTag = "Player";
-        [SerializeField] private bool openAutomatically = false; // Activate to open box when approaching without key input
-        [SerializeField] private KeyCode interactKey = KeyCode.E;
+        [SerializeField] private bool openAutomatically; // Activate to open box when approaching without key input
 
         private bool _isPlayerInRange;
 

@@ -12,11 +12,12 @@ namespace Units
 
         private Rigidbody2D _rb;
         
-        // Changed to a single Animator, since only the Body has one now!
-        private Animator _animator;
+        private Animator[] _animators;
         
         private Vector2 _movementInput;
         private Vector2 _lastMoveDirection = Vector2.down;
+        
+        public Vector2 LastMoveDirection => _lastMoveDirection;
         
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
@@ -28,8 +29,7 @@ namespace Units
             _rb.gravityScale = 0f;
             _rb.freezeRotation = true;
             
-            // Grabs the single Animator from the Body child object
-            _animator = GetComponentInChildren<Animator>();
+            _animators = GetComponentsInChildren<Animator>();
         }
 
         private void Update()
@@ -47,11 +47,11 @@ namespace Units
             if (_movementInput.sqrMagnitude > 0.01f)
             {
                 _lastMoveDirection = _movementInput;
-                UpdateAnimator(_movementInput.x, _movementInput.y, true);
+                UpdateAnimators(_movementInput.x, _movementInput.y, true);
             }
             else
             {
-                UpdateAnimator(_lastMoveDirection.x, _lastMoveDirection.y, false);
+                UpdateAnimators(_lastMoveDirection.x, _lastMoveDirection.y, false);
             }
         }
 
@@ -60,13 +60,26 @@ namespace Units
             _rb.MovePosition(_rb.position + _movementInput * (moveSpeed * Time.fixedDeltaTime));
         }
         
-        private void UpdateAnimator(float x, float y, bool isMoving)
+        private void UpdateAnimators(float x, float y, bool isMoving)
         {
-            if (_animator == null) return;
-            
-            _animator.SetFloat(MoveX, x);
-            _animator.SetFloat(MoveY, y);
-            _animator.SetBool(IsMoving, isMoving);
+            if (_animators == null) return;
+
+            foreach (var anim in _animators)
+            {
+                anim.SetFloat(MoveX, x);
+                anim.SetFloat(MoveY, y);
+                anim.SetBool(IsMoving, isMoving);
+            }
+        }
+
+        public void TriggerAnimation(int triggerHash)
+        {
+            if (_animators == null) return;
+
+            foreach (var anim in _animators)
+            {
+                anim.SetTrigger(triggerHash);
+            }
         }
     }
 }

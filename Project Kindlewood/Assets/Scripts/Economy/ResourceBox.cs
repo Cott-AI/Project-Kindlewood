@@ -8,7 +8,7 @@ namespace Economy
     {
         private readonly Dictionary<string, int> _storedResources = new Dictionary<string, int>();
 
-        // Tapahtuma, jota UI kuuntelee
+        // Event, for UI to listen
         public event Action OnResourcesChanged;
 
         public void DepositResources(string resourceType, int amount)
@@ -17,10 +17,8 @@ namespace Economy
             {
                 _storedResources[resourceType] += amount;
             }
-
-            Debug.Log($"Varastoon palautettu {amount} kpl [{resourceType}]. Yhteensä varastossa: {_storedResources[resourceType]}");
-
-            // Ilmoitetaan UI:lle, että varaston sisältö on muuttunut
+            
+            // Let UI know resource amounts has changed
             OnResourcesChanged?.Invoke();
         }
 
@@ -29,10 +27,28 @@ namespace Economy
             return _storedResources.GetValueOrDefault(resourceType, 0);
         }
 
-        // Antaa UI:lle lukuoikeuden kaikkiin resursseihin kerralla
+        // Lets UI show all stored resources
         public IReadOnlyDictionary<string, int> GetAllResources()
         {
             return _storedResources;
+        }
+
+        public bool TrySpendResources(string resourceType, int amount)
+        {
+            if (amount <= 0) return true;
+
+            int currentAmount = _storedResources.GetValueOrDefault(resourceType, 0);
+            if (currentAmount < amount)
+            {
+                return false;
+            }
+            
+            _storedResources[resourceType] = currentAmount - amount;
+            
+            // Update the UI
+            OnResourcesChanged?.Invoke();
+            
+            return true;
         }
     }
 }
